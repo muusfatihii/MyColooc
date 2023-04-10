@@ -9,7 +9,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 border-t border-blue-700 border-opacity-20">
-            <client @updateUsers="updateUsers" v-for="annonceur in annonceurs" :name="annonceur.name" :id="annonceur.id" :created_at="annonceur.created_at" :archived="annonceur.archived"/>
+            <userToValidate @updateUsers="updateUsers" v-for="annonceur in annonceurs" :name="annonceur.name" :id="annonceur.id" :created_at="annonceur.created_at" />
         </tbody>
       </table>
     </div>
@@ -18,13 +18,13 @@
 
 <script>
 
-import client from '../components/client.vue'
+import userToValidate from '../components/userToValidate.vue'
 
 export default {
 
-    name:'usersAdminView',
+    name:'validateUsersAdminView',
     components:{
-        client
+        userToValidate
     },
     data (){
 
@@ -35,7 +35,7 @@ export default {
     },
     created(){
         axios
-          .get('http://localhost:8000/api/annonceurs',
+          .get('http://localhost:8000/api/tovalidate',
           {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -50,7 +50,7 @@ export default {
 
 
             axios
-          .get('http://localhost:8000/api/annonceurs',
+          .get('http://localhost:8000/api/tovalidate',
           {
                 headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

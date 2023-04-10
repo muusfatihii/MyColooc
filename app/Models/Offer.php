@@ -10,13 +10,36 @@ class Offer extends Model
     use HasFactory;
 
     protected $fillable = [
+        'client_id',
         'price',
         'title',
-        'address'
+        'address',
+        'maxP',
+        'nbrRooms'
     ];
 
     protected $hidden = [
 
     ];
+
+
+    public function pics(){
+
+        return $this->hasMany(Pic::class);
+    
+    }
+
+    public function creator(){
+
+        return $this->belongsTo(Client::class);
+
+    }
+
+    public function candidats(){
+
+        return $this->belongsToMany(Client::class,'client_offer');
+
+    }
+
 
 }

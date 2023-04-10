@@ -5,10 +5,11 @@ export const useAuthStore = defineStore('auth',({
     state: ()=>({
 
         isAuthenticated: false,
+        isadmin: false,
+        iduser: '',
+        name: '',
+        solde: 0
 
-    }),
-    getters:{
-        valueisAuthenticated: (state) => state.isAuthenticated,
-    }
+    })
 
 }))

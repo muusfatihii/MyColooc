@@ -1,3 +1,4 @@
+window.onload = function(){
 function getLatestOffers(){
   
     $.ajax({
@@ -117,3 +118,5 @@ function getLatestOffers(){
   }
 
   getLatestOffers()
+
+}

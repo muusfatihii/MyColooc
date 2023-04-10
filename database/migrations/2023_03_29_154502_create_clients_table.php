@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
+            $table->Boolean('isAdmin')->default(false);
+            $table->unsignedFloat('solde')->default(10);
+            $table->Boolean('archived')->default(false);
+            $table->Boolean('validated')->default(false);
             $table->timestamps();
         });
     }

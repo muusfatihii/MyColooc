@@ -64,32 +64,36 @@ class AuthController extends Controller
      */
     public function destroy(string $id)
     {
+       
+
+    }
+
+    public function logout(){
+
         session::flush();
         Auth::logout();
-
-        return redirect('login');
+        
     }
 
     public function login(Request $request){
 
-
-        $validated = $request->validate([
+        $request->validate([
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required'],
         ]);
-
-        // $credentials = $request->only('email', 'password');
-
         
         $client = Client::where('email','=',$request->email)->first();
 
+
+
+       
         if($client){
             
             if(Hash::check($request->password,$client->password)){
 
                 Auth::loginUsingId($client->id, TRUE);
 
-                return 1;
+                return $client;
 
             }else{
 
