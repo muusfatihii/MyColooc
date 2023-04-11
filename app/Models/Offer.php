@@ -11,11 +11,13 @@ class Offer extends Model
 
     protected $fillable = [
         'client_id',
+        'city',
         'price',
         'title',
         'address',
         'maxP',
-        'nbrRooms'
+        'nbrRooms',
+        'student'
     ];
 
     protected $hidden = [

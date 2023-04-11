@@ -1,68 +1,52 @@
 <template>
 <main class="profile-page">
     <popup v-if="showModal">
-        <div id="offerDescription">
-      <section>
-        
-        <div class="w-full py-10 md:p-10">
-            <div class="flex md:flex-col w-full">
+        <div class="w-3/4 h-3/4 flex flex-col bg-white py-5 rounded-lg md:p-10 md:flex-row">
+            <!-- <div class="hidden bg-white flex flex-col md:flex-row">
 
-                <div class="flex flex-col md:flex-row md:space-x-1">
-                    <div class="text-center font-light rounded-t-lg w-40 py-5 px-2 bg-cyan-50 text-blue-700 cursor-pointer">Détails</div>
-                    <div class="text-center font-light rounded-t-lg w-40 py-5 px-2 bg-cyan-50 text-blue-700 cursor-pointer border-2 border-b-blue-700">Conditions</div>
-                    <div class="text-center font-light rounded-t-lg w-40 py-5 px-2 bg-cyan-50 text-blue-700 cursor-pointer border-2 border-b-blue-700">Conditions</div>
-                </div>
+                <div class="text-center font-light rounded-t-lg w-40 py-5 px-2 bg-cyan-50 text-blue-700 cursor-pointer">Détails</div>
+                <div class="text-center font-light rounded-t-lg w-40 py-5 px-2 bg-cyan-50 text-blue-700 cursor-pointer border-2 border-b-blue-700">Conditions</div>
+                <div class="text-center font-light rounded-t-lg w-40 py-5 px-2 bg-cyan-50 text-blue-700 cursor-pointer border-2 border-b-blue-700">Conditions</div>
 
-                <div class="py-10 md:p-10 bg-cyan-50 flex flex-col justify-between md:flex-row">
+            </div> -->
+            <div class="w-full flex flex-col justify-around items-center md:flex-row">
+                <div class="flex flex-col">
+                    <img :src="'./storage/OfferPics/'+selectedPic" class="w-40 h-40 rounded-md md:w-80 md:h-80">
+                    <div class="mt-1">
+                        <ul class="flex">
 
-                    <div class="md:w-1/2">
-                        <div class="mx-auto w-96">
-                        <img :src="'./storage/OfferPics/'+selectedPic" class="w-96 h-96">
-                        <div>
-                            <ul class="flex">
-
-                                <pic @selectPic="selectPic" v-for="pic in pics" :src="pic.path" />
-                                
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="md:w-1/2 flex flex-col">
-                        <h2 class="text-blue-700 text-3xl py-5 text-center">Description</h2>
-                        
-                        <ul style="color: #616571;" class="px-5 space-y-2">
-                            <li>Loyer :  {{ price }} </li>
-                            <li>Rooms  :  {{ nbrRooms }}</li>
-                            <li>Cuisine : 2</li>
-                            <li>Toilet : 2</li>
+                            <pic @selectPic="selectPic" v-for="pic in pics" :src="pic.path" />
+                            
                         </ul>
-
-                        <h3 class="text-blue-700 text-xl py-5 px-5">Conditions : </h3>
-
-                        <div class="grid grid-cols-2 px-5" style="color: #92570C;">
-                            <h4>Max : {{ maxColocs }} personnes.</h4>
-                            <h4>Max : 4 personnes.</h4>
-                            <h4>Max : 4 personnes.</h4>
-                            <h4>Max : 4 personnes.</h4>
-                            <h4>Max : 4 personnes.</h4>
-                            <h4>Max : 4 personnes.</h4>
-
-                        </div>
-
-                        <button style="background-color: #92570C;" class="text-white py-2 px-5 mt-10 mx-auto" @click="showInterest(idOffer,idClient)">Montre votre interet</button>
-
-                        <button style="background-color: #92570C;" class="text-white py-2 px-5 mt-10 mx-auto" @click="closepopup">X</button>
-
-
                     </div>
-
                 </div>
+            <div class="flex flex-col font-light">
+                    <h2 class="text-md text-blue-700 md:text-3xl md:pb-5 text-left">Description</h2>
+            
+                    <ul style="color: #616571;" class="md:space-y-2 ">
+                        <li>Prix :  {{ price }} </li>
+                        <li>Chambres  :  {{ nbrRooms }}</li>
+                        <li>Cuisine : 2</li>
+                        <li>Toilet : 2</li>
+                    </ul>
+
+            <h3 class="text-blue-700 md:text-xl md:py-5">Conditions : </h3>
+
+            <div class="grid grid-cols-2" style="color: #92570C;">
+                <h4>Max : {{ maxColocs }} personnes.</h4>
+            </div>
+
+            <div class="flex justify-between mt-2 md:mt-10">
+
+                <button class="rounded-sm bg-blue-700 text-white py-2 px-5" @click="showInterest(idOffer,idClient)">Montre votre interet</button>
+
+                <button class="rounded-sm bg-blue-700 text-white py-2 px-5" @click="closepopup">X</button>
 
             </div>
+                </div>
+            </div>
+            
         </div>
-      </section>
-        </div>
-
     </popup>
   <section class="relative block h-52">
     <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -77,15 +61,17 @@
                         <div class="text-center">
                             <h2 class="w-full md:bg-blue-700 md:text-white py-1 mb-2 rounded-r-md rounded-tl-md ">Ville</h2>
                             <div class="flex justify-center items-center">
-                                <select name="" id="">
+                                <select @change="filter()" name="" id="" v-model="city">
+                                    <option value="">All</option>
                                     <option value="Agadir">Agadir</option>
+                                    <option value="Safi">Safi</option>
                                 </select>
                             </div>
                         </div>
                         <div class="text-center">
                             <h2 class="w-full md:bg-blue-700 md:text-white py-1 mb-2 rounded-r-md rounded-tl-md ">Budget</h2>
                             <div class="flex justify-center items-center space-x-5">
-                                <select name="" id="">
+                                <select name="" id="" @change="filter()" v-model="minPrice">
                                     <option value="500">500</option>
                                     <option value="100">1000</option>
                                     <option value="1500">1500</option>
@@ -93,7 +79,7 @@
                                     <option value="2500">2500</option>
                                     <option value="3000">3000</option>
                                 </select>
-                                <select name="" id="">
+                                <select name="" id="" @change="filter()" v-model="maxPrice">
 
                                     <option value="500">500</option>
                                     <option value="100">1000</option>
@@ -108,7 +94,7 @@
                         <div class="text-center">
                             <h2 class="w-full md:bg-blue-700 md:text-white py-1 mb-2 rounded-r-md">Colocs</h2>
                             <div class="flex justify-center items-center space-x-5">
-                                <select name="" id="">
+                                <select name="" id="" @change="filter()" v-model="minColocs">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -116,7 +102,7 @@
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
-                                <select name="" id="">
+                                <select name="" id="" @change="filter()" v-model="maxColocs">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -129,7 +115,7 @@
                         <div class="text-center">
                         <h2 class="w-full md:bg-blue-700 md:text-white py-1 mb-2 rounded-r-md">Nombre de chambres</h2>
                             <div class="flex justify-center items-center space-x-5">
-                                <select name="" id="">
+                                <select name="" id="" @change="filter()" v-model="minRooms">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -137,7 +123,7 @@
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
-                                <select name="" id="">
+                                <select name="" id="" @change="filter()" v-model="maxRooms">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -199,7 +185,14 @@ export default{
             selectedPic:'hhh',
             pics:[],
             prices:[],
-            showModal: false
+            showModal: false,
+            city:'',
+            minPrice:0,
+            maxPrice:10000,
+            minColocs:0,
+            maxColocs:7,
+            minRooms:0,
+            maxRooms:7
 
         }
 
@@ -349,6 +342,31 @@ export default{
             });
 
         },
+        filter(){
+
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });
+
+            $.ajax({
+
+            url: "http://localhost:8000/api/offer/filter",
+            type: "POST",
+            context: this,
+            data: {city:this.city,minColocs:this.minColocs,maxColocs:this.maxColocs,
+                minPrice:this.minPrice,maxPrice:this.maxPrice,
+                minRooms:this.minRooms,maxRooms:this.maxRooms},
+            success:function(offers){
+
+                this.offers=offers
+
+            }
+
+            });
+
+        }
 
     }
 }

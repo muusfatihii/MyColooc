@@ -62,7 +62,7 @@
 
 <section class="mt-12">
     <h2 class="ml-5 mb-10 text-blue-700 font-light text-3xl">Récemment ajoutées</h2>
-    <div id="offers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div id="offers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20">
         <a href="#" class="card block rounded-lg p-4 shadow-sm shadow-indigo-100">
       <img
         alt="Home"

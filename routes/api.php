@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('offer/showinterest',[OfferController::class,'showinterest']);
+
+Route::get('offer/bestannonceurs',[OfferController::class,'bestAnnonceurs']);
 
 Route::apiResource('auth',AuthController::class);
 
@@ -24,8 +27,11 @@ Route::post('auth/login',[AuthController::class,'login']);
 
 Route::post('auth/logout',[AuthController::class,'logout']);
 
+Route::get('offer/stats',[OfferController::class,'stats']);
 
+Route::get('offer/nbrAnnonceurs',[OfferController::class,'nbrAnnonceurs']);
 
+Route::post('offer/filter',[OfferController::class,'filter']);
 
 Route::get('offer/archived',[OfferController::class,'archivedOffers']);
 
@@ -110,6 +116,10 @@ Route::post('client/validate',[ClientController::class,'validateClient']);
 Route::get('annonceurs',[ClientController::class,'annonceurs']);
 
 Route::get('tovalidate',[ClientController::class,'toValidate']);
+
+
+
+
 
 
 

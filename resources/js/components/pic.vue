@@ -1,6 +1,6 @@
 <template>
 
-<li @click="selectPic"><img :src="'./storage/OfferPics/'+src" class="w-10 h-10"></li>
+<li @click="selectPic"><img :src="'./storage/OfferPics/'+src" class="mr-1 w-10 h-10"></li>
 
 </template>
 

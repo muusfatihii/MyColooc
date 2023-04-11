@@ -97,6 +97,11 @@ class ClientController extends Controller
 
             DB::table('clients')->where('id', '=', $request->idclient)->update(['archived' => true]);
 
+
+            DB::table('offers')->where('client_id', '=', $request->idclient)->update(['archived' => true]);
+
+           
+
         }
 
 

@@ -17,6 +17,7 @@ return new class extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->unsignedFloat('price');
+            $table->String('city');
             $table->string('title');
             $table->string('address');
             $table->boolean('validated')->default(false);
