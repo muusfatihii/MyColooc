@@ -1,6 +1,6 @@
 <template>
 <header>
-<div class="header z-50 sticky top-0 bg-white shadow-md flex items-center justify-between px-8 py-02">
+<div class="header z-50 sticky top-0 bg-cyan-50 shadow-md flex items-center justify-between px-8 py-02">
     <!-- logo -->
     <h1 class="w-3/12">
         <a href="/">
@@ -60,7 +60,7 @@
 		</div>
 </section>
 
-<section class="mt-12">
+<section class="my-12 bg-blue-100 bg-opacity-5 pb-5">
     <h2 class="ml-5 mb-10 text-blue-700 font-light text-3xl">Récemment ajoutées</h2>
     <div id="offers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20">
         <a href="#" class="card block rounded-lg p-4 shadow-sm shadow-indigo-100">
@@ -156,7 +156,7 @@
           </div>
         </div>
       </div>
-    </a>
+        </a>
     </div>
 </section>
 <section class="p-6 dark:bg-gray-800 dark:text-gray-100">

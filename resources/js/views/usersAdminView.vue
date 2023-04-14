@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full overflow-x-scroll border border-cyan-50 shadow-md">
-      <table class="w-full border-collapse bg-cyan-50 bg-opacity-25 text-left">
+    <div class="w-full overflow-x-scroll border bg-white p-2 shadow-md">
+      <table class="w-full border-collapse bg-cyan-100 bg-opacity-50 text-left rounded-t-md">
         <thead>
           <tr>
             <th scope="col" class="px-6 py-4 font-light text-blue-700">Nom</th>
@@ -57,6 +57,16 @@ export default {
                 }
           })
           .then(response => this.annonceurs = response.data)
+          .then(()=>{
+
+            swal("Message",'Modifié','success',{
+                button:true,
+                button:"OK",
+              });
+
+          })
+
+
 
 
         }

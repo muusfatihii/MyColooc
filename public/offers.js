@@ -13,7 +13,7 @@ function getLatestOffers(){
 
         offers.forEach(offer => {
 
-            result+=`<a href="#" class="bg-cyan-50 bg-opacity-25 card block rounded-lg p-4 shadow-sm shadow-indigo-100">
+            result+=`<a href="#" class="bg-cyan-100 card block rounded-lg p-4 shadow-sm shadow-indigo-100">
             <img
               alt=""
               src="./storage/OfferPics/${offer.path}"

@@ -28,8 +28,11 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Client::class],
+            'phonenumber' => ['required'],
             'password' => ['required'],
         ]);
+
+        // 'regex:/^((71)|(73)|(77))[0-9]{7}/'
         
         $client = Client::create([
 
@@ -37,6 +40,7 @@ class AuthController extends Controller
                 'username' => $request->username,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'phonenumber' => $request->phonenumber
 
                 ]);
 
@@ -77,19 +81,30 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
+        //validation des champs renseignés
+
         $request->validate([
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required'],
         ]);
+
+
+        //verification la présence de mail renseigné dans la base de données
+
         
         $client = Client::where('email','=',$request->email)->first();
 
 
-
-       
         if($client){
+
+            //email trouvé
+
+
+            //verification le mot de passe renseigné
             
             if(Hash::check($request->password,$client->password)){
+
+                //mot de passe correct
 
                 Auth::loginUsingId($client->id, TRUE);
 
@@ -97,12 +112,17 @@ class AuthController extends Controller
 
             }else{
 
+                //faux mot de passe 
+                
                 return 0;
             }
 
         }else{
 
+            //email non trouvé
+
             return 0;
+
         }
     
 

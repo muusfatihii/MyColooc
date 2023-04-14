@@ -17,7 +17,9 @@ class Offer extends Model
         'address',
         'maxP',
         'nbrRooms',
-        'student'
+        'student',
+        'longitude',
+        'latitude'
     ];
 
     protected $hidden = [

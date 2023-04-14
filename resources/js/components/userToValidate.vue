@@ -5,6 +5,9 @@
                     <div>{{ name }}</div>
                 </td>
                 <td class="px-6 py-4">
+                    <div>{{ phonenumber }}</div>
+                </td>
+                <td class="px-6 py-4">
                     {{created_at}}
                 </td>
                 <td class="px-6 py-4">{{ nbrOffers }}</td>
@@ -29,6 +32,9 @@
             },
             id:{
                 type:Number
+            },
+            phonenumber:{
+                type:String
             },
             created_at:{
               type:String

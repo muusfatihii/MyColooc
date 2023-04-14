@@ -49,6 +49,8 @@ class InterestController extends Controller
         //
     }
 
+    //recuperer mes soumissions
+
     public function myInterests(){
 
         $idclient = $_GET['idUser'];
@@ -62,6 +64,8 @@ class InterestController extends Controller
 
     }
 
+    //supprimer une de mes soumissions
+
     public function deleteInterest(Request $request){
 
         DB::table('client_offer')
@@ -71,6 +75,8 @@ class InterestController extends Controller
 
     }
 
+    //recuperer les information de contact des personnes retenue pour la meme offre
+
     public function showinfos(Request $request){
 
         return DB::table('client_offer')
@@ -78,7 +84,7 @@ class InterestController extends Controller
                 ->where('state', '=', 1)
                 ->where('offer_id', '=', $request->idoffer)
                 ->where('client_id', '<>', $request->idclient)
-                ->select('clients.username','clients.name','clients.email')
+                ->select('clients.username','clients.name','clients.phonenumber')
                 ->get();
 
     }

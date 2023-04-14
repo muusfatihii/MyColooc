@@ -1,17 +1,18 @@
 <template>
-    <div class="w-full overflow-x-scroll border border-cyan-50 shadow-md">
+    <div class="w-full overflow-x-scroll border bg-white p-2 shadow-md">
       <popup v-if="showModal">
-        <table class="w-full border-collapse bg-white text-left">
+        <table class="relative w-3/4 rounded-md border-collapse bg-white text-left rounded-t-md ">
         <thead>
-          <tr @click="close_popup" class="cursor-pointer">X</tr>
+          <tr @click="close_popup" class="absolute left-1 cursor-pointer text-blue-700">X</tr>
           <tr>
             <th scope="col" class="px-6 py-4 font-light text-blue-700">Username</th>
             <th scope="col" class="px-6 py-4 font-light text-blue-700">Name</th>
-            <th scope="col" class="px-6 py-4 font-light text-blue-700">E-mail</th>
+            <th scope="col" class="px-6 py-4 font-light text-blue-700">Phone Number</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 border-t border-blue-700 border-opacity-20">
-         <selectedUser v-for="selectedUser in selectedUsers" :username="selectedUser.username" :name="selectedUser.name" :email="selectedUser.email" />
+          <selectedUser :username="offerOwnerInfos.username" :name="offerOwnerInfos.name" :phonenumber="offerOwnerInfos.phonenumber" :owner="1" />
+         <selectedUser v-for="selectedUser in selectedUsers" :username="selectedUser.username" :name="selectedUser.name" :phonenumber="selectedUser.phonenumber" :owner="1" />
         </tbody>
         </table>
       </popup>
@@ -61,7 +62,8 @@ export default{
         return {
             interests: [],
             selectedUsers: [],
-            showModal: false
+            showModal: false,
+            offerOwnerInfos:{}
         }
 
     },
@@ -99,6 +101,19 @@ export default{
         });
 
         $.ajax({
+            url: "http://localhost:8000/api/offer/ownerinfos",
+            type: "POST",
+            context: this,
+            data: {idoffer:payload.idoffer},
+            success:function(ownerInfos){
+
+              this.offerOwnerInfos = ownerInfos
+
+
+            }
+        });
+
+        $.ajax({
             url: "http://localhost:8000/api/interest/showinfos",
             type: "POST",
             context: this,
@@ -107,8 +122,8 @@ export default{
 
               this.selectedUsers = selectedUsers
 
-              this.showModal = true
-              
+                this.showModal = true
+
             }
         });
 

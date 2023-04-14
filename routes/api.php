@@ -17,6 +17,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('offer/nbroffers',[OfferController::class,'nbrOffers']);
+Route::post('offer/ownerinfos',[OfferController::class,'ownerinfos']);
+Route::post('offer/pics/delete',[OfferController::class,'deletePic']);
+
+
+Route::get('offer/update',[OfferController::class,'offerinfos']);
+
+Route::post('offer/updateoffer',[OfferController::class,'updateoffer']);
+
+Route::get('offer/archived',[OfferController::class,'archivedOffers']);
+
+
+
+
+
+
 Route::post('offer/showinterest',[OfferController::class,'showinterest']);
 
 Route::get('offer/bestannonceurs',[OfferController::class,'bestAnnonceurs']);
@@ -33,15 +49,15 @@ Route::get('offer/nbrAnnonceurs',[OfferController::class,'nbrAnnonceurs']);
 
 Route::post('offer/filter',[OfferController::class,'filter']);
 
-Route::get('offer/archived',[OfferController::class,'archivedOffers']);
 
-Route::apiResource('offer',OfferController::class);
 
 
 
 Route::post('offer/delete',[OfferController::class,'deleteOffer']);
 
 Route::post('offer/archive',[OfferController::class,'archive']);
+Route::post('offer/userarchive',[OfferController::class,'userarchive']);
+
 Route::post('offer/unarchive',[OfferController::class,'unarchive']);
 Route::post('offer/nbrinterests',[OfferController::class,'nbrInterests']);
 
@@ -60,6 +76,9 @@ Route::post('offer/pics',[OfferController::class,'pics']);
 Route::get('offer/minprice',[OfferController::class,'minprice']);
 
 Route::get('offer/maxprice',[OfferController::class,'maxprice']);
+
+
+Route::apiResource('offer',OfferController::class);
 
 
 

@@ -83,11 +83,14 @@ $.ajax({
     url: "http://localhost:8000/api/client/pocket",
     type: "POST",
     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-    data: {montant:montant,idclient:authStore.user.iduser},
+    data: {montant:montant,idclient:authStore.iduser},
     context:this,
     success:function(data){
 
-      alert('Done')
+        swal("Message",'Opération réussie','success',{
+                button:true,
+                button:"OK",
+              });
         
     }
 });

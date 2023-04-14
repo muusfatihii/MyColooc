@@ -22,9 +22,12 @@ return new class extends Migration
             $table->string('address');
             $table->boolean('validated')->default(false);
             $table->boolean('archived')->default(true);
+            $table->boolean('userarchived')->default(false);
             $table->boolean('student')->default(false);
             $table->unsignedInteger('maxP');
             $table->unsignedInteger('nbrRooms');
+            $table->String('latitude');
+            $table->String('longitude');
             $table->timestamps();
         });
     }

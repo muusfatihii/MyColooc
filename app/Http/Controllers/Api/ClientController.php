@@ -28,23 +28,6 @@ class ClientController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Client::class],
-            'password' => ['required'],
-        ]);
-        
-        $client = Client::create([
-
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-
-                ]);
-
-        echo $client->id;
 
     }
 
@@ -69,11 +52,10 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        session::flush();
-        Auth::logout();
-
-        return redirect('login');
+        
     }
+    
+    //recupérer tous les annonceurs 
 
     public function annonceurs(){
 
@@ -83,6 +65,8 @@ class ClientController extends Controller
         
     }
 
+     //archiver desarchiver un client
+
     public function archive(Request $request){
 
         $client = DB::table('clients')
@@ -91,16 +75,21 @@ class ClientController extends Controller
 
         if($client->archived){
 
+            //desarchivé si dejà archivé
+
             DB::table('clients')->where('id', '=', $request->idclient)->update(['archived' => false]);
 
         }else{
 
+            //archiver le client
+
             DB::table('clients')->where('id', '=', $request->idclient)->update(['archived' => true]);
 
 
-            DB::table('offers')->where('client_id', '=', $request->idclient)->update(['archived' => true]);
+            //si il est archivé toutes les offres de ce client seront elles aussi archivées et ne seront plus accessibles
 
-           
+
+            DB::table('offers')->where('client_id', '=', $request->idclient)->update(['archived' => true]);
 
         }
 
@@ -108,15 +97,18 @@ class ClientController extends Controller
     }
 
 
+    //afficher les différent profils utilisateurs qui ont fait des demandes de validation de profil
     public function toValidate(){
-
 
         return DB::table('validation_requests')
             ->join('clients', 'clients.id', '=', 'validation_requests.client_id')
-            ->select('clients.id','clients.name','clients.created_at')
+            ->select('clients.id','clients.name','clients.phonenumber','clients.created_at')
             ->get();
 
     }
+
+
+    //valider le profil Client
 
     public function validateClient(Request $request){
 
@@ -126,23 +118,20 @@ class ClientController extends Controller
         
     }
 
-
+    //recuperer le nombre des offres d'un client
     public function clientOffers(Request $request){
 
         return DB::table('offers')->where('client_id','=',$request->idclient)->count();
     }
 
-
+    //alimenter son E-wallet
     public function pocket(Request $request){
 
-
-
-
         DB::table('clients')->where('id', '=', $request->idclient)->increment('solde',$request->montant);
-
-
-
     }
+
+
+    //recuperer les infos concernant un client donné
 
     public function clientInfos(Request $request){
 
@@ -150,22 +139,33 @@ class ClientController extends Controller
             ->where('id', '=', $request->idclient)
             ->first();
 
-
     }
+
+
+    //le client peut a travers elle modifier son profile
 
     public function updateProfil(Request $request){
 
             DB::table('clients')
             ->where('id', '=', $request->idclient)
-            ->update(['password' => Hash::make($request->newpsw)]);
+            ->update(['password' => Hash::make($request->newpsw),'name'=>$request->name,'phonenumber'=>$request->phonenumber]);
 
     }
+
+    //faire une demande de validation à l'administrateur en payant tout dabord la somme requise
 
     public function profilToValidate(Request $request){
 
         $client = Client::find($request->idclient);
 
-        if($client->solde>=10){
+        $requested = DB::table('validation_requests')
+                    ->where('client_id','=',$request->idclient)
+                    ->count();
+
+
+        if($requested==0){
+
+            if($client->solde>=10){
 
                 DB::table('clients')
                 ->where('id','=',$request->idclient)
@@ -177,15 +177,26 @@ class ClientController extends Controller
         
                 ]);
 
-            return 1;
+            echo 1;
+
+            }else{
+
+            echo -1;
+
+            }
 
         }else{
 
-            return 0;
+            echo 0;
+
 
         }
+        
 
     }
+
+
+    //Supprimer un client définitivement
 
 
     public function delete(Request $request){

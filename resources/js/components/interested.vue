@@ -1,6 +1,6 @@
 <template>
 
-    <tr class="font-light text-sm text-blue-700 hover:bg-opacity-100">
+    <tr :class="selected+' font-light text-sm text-blue-700 hover:bg-opacity-100'">
             <td class="px-6 py-4">
                 <div>{{ username }}</div>
             </td>
@@ -19,7 +19,7 @@
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="h-4 w-4"
+                    class="h-4 w-4 text-red-700"
                     x-tooltip="tooltip"
                   >
                     <path
@@ -40,6 +40,13 @@
 <script>
 export default{
     name: 'interested',
+    data(){
+
+        return {
+            selected:''
+        }
+
+    },
     props:{
         username:{
             type:String
@@ -52,7 +59,23 @@ export default{
         },
         idoffer:{
             type:Number
+        },
+        state:{
+            type:Number
         }
+    },
+    created(){
+
+        if(this.state==1){
+
+            this.selected='bg-green-100'
+
+        }else{
+
+            this.selected=''
+
+        }
+
     },
     methods:{
 
@@ -70,6 +93,8 @@ export default{
                 context: this,
                 data: {idoffer:idoffer,idclient:id},
                 success:function(){
+
+                    this.selected='bg-green-100'
 
                 
                 }
@@ -90,6 +115,8 @@ export default{
                 context: this,
                 data: {idoffer:idoffer,idclient:id},
                 success:function(){
+
+                    this.selected=''
 
                 
                 }

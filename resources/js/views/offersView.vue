@@ -26,8 +26,7 @@
                     <ul style="color: #616571;" class="md:space-y-2 ">
                         <li>Prix :  {{ price }} </li>
                         <li>Chambres  :  {{ nbrRooms }}</li>
-                        <li>Cuisine : 2</li>
-                        <li>Toilet : 2</li>
+                        <li v-if="latitude!='' && longitude!=''" @click="showLocalisation" class="cursor-pointer">Localisation</li>
                     </ul>
 
             <h3 class="text-blue-700 md:text-xl md:py-5">Conditions : </h3>
@@ -38,7 +37,7 @@
 
             <div class="flex justify-between mt-2 md:mt-10">
 
-                <button class="rounded-sm bg-blue-700 text-white py-2 px-5" @click="showInterest(idOffer,idClient)">Montre votre interet</button>
+                <button v-if="idClient!=idofferowner" class="rounded-sm bg-blue-700 text-white py-2 px-5" @click="showInterest(idOffer,idClient)">Montre votre interet</button>
 
                 <button class="rounded-sm bg-blue-700 text-white py-2 px-5" @click="closepopup">X</button>
 
@@ -47,6 +46,19 @@
             </div>
             
         </div>
+    </popup>
+    <popup v-if="Localisation">
+
+        <div class="h-screen w-screen md:p-20">
+
+            <div class="flex justify-end">
+                <div @click="closeLocalisation" class="text-white text-md px-2 cursor-pointer">X</div>
+            </div>
+            <iframe class="h-full w-full rounded-b-md rounded-tl-md" :src="'https://www.google.com/maps?q='+latitude+','+longitude+'&h1=es;z=14&output=embed'">
+            </iframe>
+
+        </div>
+
     </popup>
   <section class="relative block h-52">
     <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -137,11 +149,54 @@
             </aside>
 
             <div id="offers" class="grid grid-cols-1 md:grid-cols-2 mx-auto">
-                <offer @showDescription="showDescription" v-for="offer in offers" :id="offer.id" :address="offer.address" :price="offer.price" :nbrRooms="offer.nbrRooms" :idClient="idClient" />
+                <offer @showDescription="showDescription" v-for="offer in offers" :id="offer.id" :address="offer.address" :price="offer.price" :nbrRooms="offer.nbrRooms" :student="offer.student" :validated="offer.validated" :maxP="offer.maxP" :idClient="idClient" />
 
             </div>
+        </div>
+        <div class="flex justify-center">
+            <nav aria-label="Page navigation example">
+                <ul class="list-style-none flex">
+                    <li>
+                    <a
+                        v-if="page>1"
+                        @click="previous"
+                        class="cursor-pointer relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-500 transition-all duration-300 dark:text-neutral-400"
+                        >Previous</a
+                    >
+                    </li>
+                    <li  @click="go(pagee)" v-for="pagee in nbrPages">
+                    <a
+                        class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100  dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+                        href="#!"
+                        >{{ pagee }}</a
+                    >
+                    </li>
+                    <!-- <li aria-current="page">
+                    <a
+                        class="relative block rounded bg-primary-100 px-3 py-1.5 text-sm font-medium text-primary-700 transition-all duration-300"
+                        href="#!"
+                        >2
+                        <span
+                        class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
+                        >(current)</span
+                        >
+                    </a>
+                    </li> -->
+                    
+                    <li>
+                    <a
+                       v-if="page<this.nbrPages"
+                       @click="next"
+                        class="cursor-pointer relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+                        href="#!"
+                        >Next</a
+                    >
+                    </li>
+                </ul>
+        </nav>
 
         </div>
+        
     </div>
   </section>
   
@@ -182,7 +237,7 @@ export default{
             nbrRooms:0,
             maxColocs:0,
             idOffer:'',
-            selectedPic:'hhh',
+            selectedPic:'',
             pics:[],
             prices:[],
             showModal: false,
@@ -192,12 +247,22 @@ export default{
             minColocs:0,
             maxColocs:7,
             minRooms:0,
-            maxRooms:7
+            maxRooms:7,
+            idofferowner:'',
+            Localisation:false,
+            latitude:'',
+            longitude:'',
+            p:2,
+            page:1,
+            nbrPages:1
+
 
         }
 
     },
     created(){
+
+        this.nbrOffers()
         
         axios
           .get('http://localhost:8000/api/offer',
@@ -207,8 +272,6 @@ export default{
                 }
           })
           .then(response => this.offers = response.data)
-
-        alert(this.prices)
     
     },
     methods:{
@@ -235,10 +298,12 @@ export default{
             data: {idoffer:payload.idOffer},
             success:function(offer){
 
-
+                this.idofferowner = offer.client_id
                 this.price = offer.price
                 this.nbrRooms = offer.nbrRooms
                 this.maxColocs = offer.maxP
+                this.latitude  = offer.latitude
+                this.longitude  = offer.longitude
 
                 this.getPics(payload.idOffer)
 
@@ -342,7 +407,7 @@ export default{
             });
 
         },
-        filter(){
+        filter(skip){
 
             $.ajaxSetup({
             headers: {
@@ -357,7 +422,7 @@ export default{
             context: this,
             data: {city:this.city,minColocs:this.minColocs,maxColocs:this.maxColocs,
                 minPrice:this.minPrice,maxPrice:this.maxPrice,
-                minRooms:this.minRooms,maxRooms:this.maxRooms},
+                minRooms:this.minRooms,maxRooms:this.maxRooms,skip:skip},
             success:function(offers){
 
                 this.offers=offers
@@ -365,6 +430,67 @@ export default{
             }
 
             });
+
+        },
+        showLocalisation(){
+
+            this.showModal=false
+            this.Localisation=true
+
+        },
+        closeLocalisation(){
+
+           
+            this.Localisation=false
+            this.showModal=true
+
+        },
+        nbrOffers(){
+
+
+
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });
+
+            $.ajax({
+
+            url: "http://localhost:8000/api/offer/nbroffers",
+            type: "POST",
+            context: this,
+            data: {city:this.city,minColocs:this.minColocs,maxColocs:this.maxColocs,
+                minPrice:this.minPrice,maxPrice:this.maxPrice,
+                minRooms:this.minRooms,maxRooms:this.maxRooms},
+            success:function(nbroffers){
+
+                this.nbroffers=nbroffers
+
+                this.nbrPages = Math.ceil(this.nbroffers/this.p)
+
+            }
+
+            });
+
+        },
+        go(page){
+
+            this.page = page
+
+            this.filter((this.page-1)*this.p)
+
+        },
+        previous(){
+
+            this.page--
+            this.filter((this.page-1)*this.p)
+
+        },
+        next(){
+
+            this.page++
+            this.filter((this.page-1)*this.p)
 
         }
 
