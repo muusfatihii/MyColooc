@@ -1,15 +1,8 @@
 <template>
-<section class="antialiased bg-gray-100 text-gray-600 min-h-screen w-screen p-4">
+<section class="antialiased bg-white text-blue-700 min-h-screen w-screen p-4">
     <div class="h-full">
-        <!-- Pay component -->
-        <div>
-            <!-- Card background -->
-            <div class="relative px-4 sm:px-6 lg:px-8 max-w-lg mx-auto">
-                <img class="rounded-t shadow-lg" src="https://preview.cruip.com/mosaic/images/pay-bg.jpg" width="460" height="180" alt="Pay background" />
-            </div>
-            <!-- Card body -->
-            <div class="relative px-4 sm:px-6 lg:px-8 pb-8 max-w-lg mx-auto">
-                <div class="bg-white px-8 pb-6 rounded-b shadow-lg">
+            <div class="relative px-4 sm:px-6 lg:px-8 py-8 max-w-lg mx-auto bg-cyan-50">
+                <div class="bg-white px-8 py-6 rounded-b shadow-lg">
                     
                     <!-- Card form -->
                     <div>
@@ -50,15 +43,13 @@
                         <!-- Form footer -->
                         <div class="mt-6">
                             <div class="mb-4">
-                                <button @click="pay" class="font-medium text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2">Pay</button>
+                                <button @click="pay" class="font-medium text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out w-full bg-blue-700 hover:bg-blue-800 text-white focus:outline-none focus-visible:ring-2">Pay</button>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
-        </div>
     </div>
 </section>
 </template>

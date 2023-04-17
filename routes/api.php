@@ -78,6 +78,7 @@ Route::get('offer/minprice',[OfferController::class,'minprice']);
 Route::get('offer/maxprice',[OfferController::class,'maxprice']);
 
 
+// Route::middleware('isAdmin')->apiResource('offer',OfferController::class);
 Route::apiResource('offer',OfferController::class);
 
 

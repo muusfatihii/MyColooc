@@ -3,9 +3,9 @@
   <popup v-if="showPhotosSlider">
 
     <div class="relative" >
-         <div class="absolute top-1 right-2 text-white cursor-pointer" @click="hidePhotos">X</div>
+         <div class="absolute top-1 right-2 text-white cursor-pointer p-2 bg-black bg-opacity-40 rounded-full hover:bg-opacity-90" @click="hidePhotos">X</div>
 
-         <div class="absolute top-1 left-2 text-white cursor-pointer" @click="deletePic">S</div>
+         <div class="absolute top-1 left-2 text-white cursor-pointer p-2 bg-black bg-opacity-40 rounded-full hover:bg-opacity-90" @click="deletePic">S</div>
         
           <img :src="'http://localhost:8000/storage/OfferPics/'+selectedOffer.photos[currentIndex].path" alt="image" class="rounded-md h-80 w-80" />
 

@@ -271,14 +271,28 @@ class OfferController extends Controller
 
     public function homeOffers(){
 
-        return DB::table('offers')
-                ->join('pics','offers.id','=','pics.offer_id')
-                ->where('offers.archived','=',false)
-                ->where('offers.userarchived','=',false)
-                ->select('offers.*','pics.path')
-                ->orderBy('offers.validated','desc')
-                ->limit(6)
-                ->get();
+
+        // return Offer::with(['pics' => function($query) {
+        //     $query->select('offer_id', 'path')->first();
+        // }])->get();
+
+        // return DB::table('offers')
+        //         ->join('pics','offers.id','=','pics.offer_id')
+        //         ->where('offers.archived','=',false)
+        //         ->where('offers.userarchived','=',false)
+        //         ->select('offers.*','pics.path')
+        //         ->orderBy('offers.validated','desc')
+        //         ->limit(6)
+        //         ->get();
+
+
+        // return Offer::leftOuterJoin('pics','pics.offer_id','=','offers.id')
+        //         ->where('offers.archived','=',false)
+        //         ->where('offers.userarchived','=',false)
+        //         ->select('offers.*','pics.path')
+        //         ->orderBy('offers.validated','desc')
+        //         ->limit(6)
+        //         ->get();
 
     }
 

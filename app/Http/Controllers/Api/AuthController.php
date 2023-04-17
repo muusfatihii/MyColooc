@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -43,6 +44,13 @@ class AuthController extends Controller
                 'phonenumber' => $request->phonenumber
 
                 ]);
+       
+        User::create([
+
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+
+            ]);
 
         echo $client->id;
     }
@@ -74,9 +82,12 @@ class AuthController extends Controller
 
     public function logout(){
 
-        session::flush();
-        Auth::logout();
         
+
+            session::flush();
+            Auth::logout();
+
+
     }
 
     public function login(Request $request){
@@ -92,7 +103,7 @@ class AuthController extends Controller
         //verification la présence de mail renseigné dans la base de données
 
         
-        $client = Client::where('email','=',$request->email)->first();
+        $client = User::where('email','=',$request->email)->first();
 
 
         if($client){
@@ -106,7 +117,11 @@ class AuthController extends Controller
 
                 //mot de passe correct
 
-                Auth::loginUsingId($client->id, TRUE);
+                // Auth::loginUsingId($client->id, TRUE);
+
+                // Auth::login($client);
+
+                $authToken = $client->createToken('auth-token')->plainTextToken;
 
                 return $client;
 

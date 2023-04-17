@@ -13,11 +13,11 @@ function getLatestOffers(){
 
         offers.forEach(offer => {
 
-            result+=`<a href="#" class="bg-cyan-100 card block rounded-lg p-4 shadow-sm shadow-indigo-100">
+            result+=`<div class="bg-cyan-50 rounded-lg p-4 shadow-sm shadow-cyan-100">
             <img
               alt=""
               src="./storage/OfferPics/${offer.path}"
-              class="h-56 w-72 rounded-md object-cover"
+              class="h-56 w-full rounded-md object-cover"
             />
           
             <div class="mt-2">
@@ -25,13 +25,13 @@ function getLatestOffers(){
                 <div>
                   <dt class="sr-only">Price</dt>
           
-                  <dd class="text-xs font-medium">${offer.price}MDH/Month</dd>
+                  <dd class="text-xs font-light text-blue-700">${offer.price} DH/Mois </dd>
                 </div>
           
                 <div>
                   <dt class="sr-only text-blue-700">Address</dt>
           
-                  <dd class="font-medium text-blue-700">${offer.address}</dd>
+                  <dd class="text-xs font-medium text-blue-700">${offer.address}</dd>
                 </div>
               </dl>
           
@@ -76,7 +76,7 @@ function getLatestOffers(){
                 </div>
               </div>
             </div>
-          </a>`;
+          </div>`;
 
         })
 

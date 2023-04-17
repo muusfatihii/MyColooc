@@ -1,7 +1,7 @@
 <template>
-<div  class="card block rounded-lg p-4 shadow-sm shadow-indigo-100" @click="showDescription(id)">
+<div  class="cursor-pointer rounded-lg p-4 shadow-sm shadow-indigo-100" @click="showDescription(id)">
             <img
-                alt="Home"
+                alt=""
                 :src="'./storage/OfferPics/'+pic"
                 class="h-56 w-72 rounded-md object-cover"
             />
@@ -11,7 +11,7 @@
                 <div>
                     <dt class="sr-only">Price</dt>
 
-                    <dd class="text-xs font-medium">{{price}}MDH/Month</dd>
+                    <dd class="text-xs font-medium">{{price}} DH/Mois</dd>
                 </div>
 
                 <div>
@@ -94,7 +94,7 @@ export default{
         }
 
     },
-    created(){
+    beforeCreate(){
 
         $.ajaxSetup({
         headers: {

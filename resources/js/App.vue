@@ -3,9 +3,9 @@
 <div class="header z-50 sticky top-0 bg-cyan-50 shadow-md flex items-center justify-between px-8 py-02">
     <!-- logo -->
     <h1 class="w-3/12">
-        <a href="/">
-            <span class="text-blue-700 text-lg">My</span><span class="text-cyan-400 text-lg">Coloc</span>
-        </a>
+        <div>
+          <RouterLink to="/"><span class="text-blue-700 text-lg">My</span><span class="text-cyan-400 text-lg">Coloc</span></RouterLink>
+        </div>
     </h1>
 
     <!-- navigation -->
@@ -37,7 +37,7 @@
 
 </div>
 
-<router-view :idClient="authStore.iduser" />
+<router-view :idClient="authStore.iduser" searchedCity="'Agadir'" />
 
 <section class="p-6 dark:bg-gray-800 dark:text-gray-100">
 		<div class="container grid gap-6 mx-auto text-center lg:grid-cols-2 xl:grid-cols-5">
@@ -48,8 +48,8 @@
 				</p>
 				<form action="" class="self-stretch ng-untouched ng-pristine ng-valid">
 					<div class="flex rounded-md overflow-hidden w-full">
-                        <input type="text" class="w-full rounded-md rounded-r-none" />
-                        <button class="bg-blue-700 text-white px-4 text-md font-light py-2 rounded-r-md">Serach</button>
+                        <input id="searchedCity" type="text" class="px-5 w-full rounded-md rounded-r-none text-blue-700 border border-sm border-blue-700 font-light"/>
+                        <button type="button" @click="searchByCity" class="bg-blue-700 text-white px-4 text-md font-light py-2 rounded-r-md">Serach</button>
           </div>
 				</form>
 			</div>
@@ -62,7 +62,7 @@
 
 <section class="my-12 bg-blue-100 bg-opacity-5 pb-5">
     <h2 class="ml-5 mb-10 text-blue-700 font-light text-3xl">Récemment ajoutées</h2>
-    <div id="offers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20">
+    <div id="offers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20 gap-y-5">
         <a href="#" class="card block rounded-lg p-4 shadow-sm shadow-indigo-100">
       <img
         alt="Home"
@@ -170,11 +170,19 @@
 				<p class="my-12">
 					<span class="font-light dark:text-gray-50 text-start">Modular and versatile.Fugit vero facilis dolor sit neque cupiditate minus esse accusamus cumque at.</span>
 				</p>
-        <ul class="text-blue-700 font-semibold text-start space-y-5">
-          <li> v Local le plus adapté aux besoins des étudiants</li>
-          <li> v Dans des zones plus sécurisées et dans des appartements tranquils </li>
-          <li> v Plus proche de vos établissements</li>
-          <li> v Ou des moyens de transport y menant </li>
+        <ul class="text-md text-blue-700 font-light text-start space-y-5">
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+Local le plus adapté aux besoins des étudiants</li>
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+             Dans des zones plus sécurisées et dans des appartements tranquils </li>
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+            Plus proche de vos établissements</li>
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+            Ou des moyens de transport y menant </li>
         </ul>
 			</div>
 		</div>
@@ -186,11 +194,19 @@
 				<p class="my-12">
 					<span class="font-light dark:text-gray-50 text-start">Modular and versatile.Fugit vero facilis dolor sit neque cupiditate minus esse accusamus cumque at.</span>
 				</p>
-        <ul class="text-blue-700 font-semibold text-start space-y-5">
-          <li>Profils des propriètaires validés</li>
-          <li>Idée fiable de local de l'intérieur</li>
-          <li>Filtrage parfait basé sur votre prochain établissement</li>
-          <li>Recommandations des anciens locataires</li>
+        <ul class="text-md text-blue-700 font-light text-start space-y-5">
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+            Profils des propriètaires validés</li>
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+            Idée fiable de local de l'intérieur</li>
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+            Filtrage parfait basé sur votre prochain établissement</li>
+          <li>
+            <svg fill="#00458B" class="w-4 h-4 inline mr-2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.42 512.42" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M509.313,67.45c-4.16-4.16-10.88-4.267-15.04-0.107L134.06,422.33l-115.2-121.6c-3.733-4.48-10.453-5.12-15.04-1.387 c-4.48,3.733-5.12,10.453-1.387,15.04c0.32,0.32,0.533,0.64,0.853,0.96l122.667,129.493c1.92,2.133,4.693,3.307,7.573,3.307h0.213 c2.773,0,5.44-1.067,7.467-3.093l368-362.667C513.473,78.33,513.473,71.61,509.313,67.45z"></path> </g> </g> </g></svg>
+            Recommandations des anciens locataires</li>
         </ul>
 			</div>
       <img src="pics/home2.jpg" 
@@ -199,10 +215,9 @@
       style="border-bottom-right-radius: 12rem;border-top-left-radius: 12rem;">
 		</div>
 </section>
-<section>
-  <a
+<section class="mb-6">
+  <div
   class="block w-3/4 mx-auto rounded-xl bg-blue-700 p-4 shadow-xl sm:p-6 lg:p-8"
-  href=""
   >
 
   <h3 class="mt-3 text-center text-lg font-bold text-white sm:text-xl">
@@ -215,11 +230,15 @@
     cupiditate, accusamus minus laboriosam totam laborum, deserunt sint.
   </p>
 
-  <button class="mt-5 mx-auto px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
+<div class="flex justify-center">
+
+  <button @click="start" class="mt-5 mx-auto px-6 py-2 bg-white text-blue-700 hover:text-blue-800 text-sm font-medium rounded-md">
 	C'est parti
   </button>
 
-</a>
+ </div>
+
+</div>
 </section>
 </header>
 </template>
@@ -232,6 +251,9 @@ import router from './router'
 import { useAuthStore } from './stores/auth'
 
 const authStore = useAuthStore()
+
+
+var searchedCity
 
 
 
@@ -258,6 +280,7 @@ function logout(){
               authStore.solde=0
 
               router.push('/')
+
               
             }
         });
@@ -265,13 +288,39 @@ function logout(){
 
 }
 
+function start(){
+  
+
+  window.scrollTo(0, 0);
+
+  router.push('/offers')
 
 
 
+}
+
+function searchByCity(){
+
+  searchedCity = document.getElementById('searchedCity').value
+
+
+  if(searchedCity!=''){
+
+
+
+    window.scrollTo(0, 0)
+
+    router.push('/offers')
+
+
+
+    // router.push({path: '/offers', params:{searchedCity:searchedCity}})
+  }
+        
+}
 
 
 </script>
-
 
 
 
